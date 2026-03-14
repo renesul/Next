@@ -1,6 +1,7 @@
-# Binary
+# Binary / build
 nex
 dbquery
+build/
 
 # Database
 *.db

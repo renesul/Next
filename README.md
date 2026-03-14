@@ -184,10 +184,15 @@ templates/                    HTML pages (inline CSS/JS, no build step)
 ## 🧑‍💻 Development
 
 ```bash
-make build               # Build binary
-make run                 # Build and run
+make build               # Build binary (output: build/ok)
 make test                # Run all tests
-make clean               # Remove binary
+make lint                # Run golangci-lint
+make fmt                 # Format code
+make check               # deps + fmt + vet + test (full CI check)
+make install             # Build and install to ~/.local/bin
+make generate            # Run go generate
+make run                 # Build and run
+make clean               # Remove binary and build/
 ```
 
 ### Databases
