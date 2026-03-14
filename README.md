@@ -142,7 +142,7 @@ WhatsApp Message
 ### Project Structure
 
 ```
-cmd/nex/main.go              Entry point, wiring, signal handling, migrations
+main.go                       Entry point, wiring, signal handling, migrations
 
 app/                          Business logic
   types/types.go              Shared types (Message, Agent, Contact, etc.)

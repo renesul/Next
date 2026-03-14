@@ -1,5 +1,5 @@
 BINARY  = nex
-SRC     = ./cmd/nex/
+SRC     = .
 TAGS    = fts5
 INSTALL = $(HOME)/.nex
 
