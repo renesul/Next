@@ -1,29 +1,46 @@
-# Nex
+<div align="center">
 
-**Intelligent WhatsApp secretary** — an AI agent on your personal WhatsApp number, powered by any OpenAI-compatible LLM, with a full web UI for configuration and monitoring.
+```
+ ███╗   ██╗███████╗██╗  ██╗
+ ████╗  ██║██╔════╝╚██╗██╔╝
+ ██╔██╗ ██║█████╗   ╚███╔╝
+ ██║╚██╗██║██╔══╝   ██╔██╗
+ ██║ ╚████║███████╗██╔╝ ██╗
+ ╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝
+```
 
----
+### **IA que atende por você**
 
-## Highlights
+Intelligent WhatsApp secretary — an AI agent on your personal WhatsApp number, powered by any OpenAI-compatible LLM, with a full web UI for configuration and monitoring.
 
-- **WhatsApp via QR code** — uses your personal number, no Business API needed
-- **Any OpenAI-compatible LLM** — OpenAI, Groq, Ollama, Together, LM Studio, etc.
-- **16 built-in tools** + custom API tools + MCP protocol support
-- **Knowledge base** with FTS5 full-text search + embeddings (RAG)
-- **Up to 10 agents** with independent personality, model, and provider + agent chaining
-- **Guardrails** — whitelist/blacklist, anti-prompt-injection, PII filtering
-- **Message debounce** — groups rapid messages before sending to AI
-- **Session management** with automatic summaries (prevents hallucination)
-- **Full web UI** — config, conversations, logs, knowledge base, reports, chat
-- **Multi-user auth** — admin and user roles, bcrypt, persistent sessions
-- **WhatsApp groups** (optional, configurable per group)
-- **Scheduled messages** — hourly, daily, weekly, monthly, cron expressions
-- **MCP server** — exposes all tools via SSE protocol
-- **External databases** — query MySQL and PostgreSQL from the AI
+[![Go 1.25+](https://img.shields.io/badge/Go-1.25+-00ADD8?style=for-the-badge&logo=go&logoColor=white)](https://go.dev)
+[![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20WSL-lightgrey?style=for-the-badge)](/)
+[![License](https://img.shields.io/badge/License-Private-red?style=for-the-badge)](/)
+
+</div>
 
 ---
 
-## Quick Start
+## ✨ Features
+
+- 📱 **WhatsApp via QR code** — uses your personal number, no Business API needed
+- 🤖 **Any OpenAI-compatible LLM** — OpenAI, Groq, Ollama, Together, LM Studio, etc.
+- 🔧 **16 built-in tools** + custom API tools + MCP protocol support
+- 📚 **Knowledge base** with FTS5 full-text search + embeddings (RAG)
+- 👥 **Up to 10 agents** with independent personality, model, and provider + agent chaining
+- 🛡️ **Guardrails** — whitelist/blacklist, anti-prompt-injection, PII filtering
+- ⏳ **Message debounce** — groups rapid messages before sending to AI
+- 🧠 **Session management** with automatic summaries (prevents hallucination)
+- 🖥️ **Full web UI** — config, conversations, logs, knowledge base, reports, chat
+- 🔐 **Multi-user auth** — admin and user roles, bcrypt, persistent sessions
+- 💬 **WhatsApp groups** (optional, configurable per group)
+- ⏰ **Scheduled messages** — hourly, daily, weekly, monthly, cron expressions
+- 🔌 **MCP server** — exposes all tools via SSE protocol
+- 🗄️ **External databases** — query MySQL and PostgreSQL from the AI
+
+---
+
+## 🚀 Quick Start
 
 ```bash
 git clone <repo-url>
@@ -36,21 +53,21 @@ cd Nex
 2. Login with `admin` / `admin123`
 3. Set your AI provider API key and base URL
 4. Scan the WhatsApp QR code
-5. Done — start chatting
+5. Done — start chatting 🎉
 
 ---
 
-## Requirements
+## 📋 Requirements
 
 | Requirement | Details |
 |---|---|
-| Go | 1.25+ |
-| CGO | Enabled (`gcc` / `build-essential` must be installed) |
-| OS | Linux, macOS (Windows via WSL) |
+| **Go** | 1.25+ |
+| **CGO** | Enabled (`gcc` / `build-essential` must be installed) |
+| **OS** | Linux, macOS (Windows via WSL) |
 
 ---
 
-## Configuration
+## ⚙️ Configuration
 
 | Variable | Default | Description |
 |---|---|---|
@@ -59,11 +76,11 @@ cd Nex
 
 Both are optional. Set them in `.env` or as environment variables.
 
-**Everything else** (AI provider, system prompt, tools, guardrails, agents, etc.) is configured through the web UI and stored in SQLite.
+> **Everything else** (AI provider, system prompt, tools, guardrails, agents, etc.) is configured through the web UI and stored in SQLite.
 
 ---
 
-## Built-in Tools
+## 🛠️ Built-in Tools
 
 | Tool | Description |
 |---|---|
@@ -88,38 +105,38 @@ You can also add **custom API tools** (any REST endpoint) and **MCP tools** (via
 
 ---
 
-## Architecture
+## 🏗️ Architecture
 
 ### Message Flow
 
 ```
 WhatsApp Message
-    |
-    v
+    │
+    ▼
  Filter (private/group, text-only, not from self)
-    |
-    v
+    │
+    ▼
  Debounce (group rapid messages)
-    |
-    v
+    │
+    ▼
  Guardrails Pre-filter
-    |
-    v
+    │
+    ▼
  Agent Lookup (per-contact routing)
-    |
-    v
+    │
+    ▼
  Session (create/resume + auto-summary)
-    |
-    v
+    │
+    ▼
  RAG (FTS5 + embeddings hybrid search)
-    |
-    v
+    │
+    ▼
  AI (LLM call + tool execution loop)
-    |
-    v
+    │
+    ▼
  Guardrails Post-filter
-    |
-    v
+    │
+    ▼
  WhatsApp Response
 ```
 
@@ -151,21 +168,21 @@ templates/                    HTML pages (inline CSS/JS, no build step)
 
 ---
 
-## Tech Stack
+## 📦 Tech Stack
 
 | Component | Technology |
 |---|---|
-| Language | Go |
-| Database | SQLite with FTS5 |
-| WhatsApp | whatsmeow (Web multidevice protocol) |
-| AI Client | go-openai (any OpenAI-compatible API) |
-| MCP | mcp-go (SSE transport) |
-| Auth | bcrypt (golang.org/x/crypto) |
-| External DBs | MySQL (go-sql-driver), PostgreSQL (lib/pq) |
+| **Language** | Go |
+| **Database** | SQLite with FTS5 |
+| **WhatsApp** | whatsmeow (Web multidevice protocol) |
+| **AI Client** | go-openai (any OpenAI-compatible API) |
+| **MCP** | mcp-go (SSE transport) |
+| **Auth** | bcrypt (golang.org/x/crypto) |
+| **External DBs** | MySQL (go-sql-driver), PostgreSQL (lib/pq) |
 
 ---
 
-## Development
+## 🧑‍💻 Development
 
 ```bash
 ./build.sh               # Build binary
@@ -185,6 +202,14 @@ Stored in `~/.nex/` (or `DB_PATH`):
 
 ---
 
-## License
+## 📄 License
 
 Private project.
+
+---
+
+<div align="center">
+
+Built with ❤️ using **Go** + **SQLite**
+
+</div>
