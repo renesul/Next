@@ -45,8 +45,7 @@ Intelligent WhatsApp secretary — an AI agent on your personal WhatsApp number,
 ```bash
 git clone <repo-url>
 cd Nex
-./build.sh
-./nex
+make run
 ```
 
 1. Open **http://localhost:8080**
@@ -185,10 +184,10 @@ templates/                    HTML pages (inline CSS/JS, no build step)
 ## 🧑‍💻 Development
 
 ```bash
-./build.sh               # Build binary
-./run.sh                  # Build and run
-./test.sh                 # Run all tests
-./test.sh Config          # Run tests matching "Config"
+make build               # Build binary
+make run                 # Build and run
+make test                # Run all tests
+make clean               # Remove binary
 ```
 
 ### Databases
