@@ -172,42 +172,6 @@ func (r *RAG) ListEntriesPaginated(limit, offset int) ([]types.KnowledgeEntry, i
 	return entries, total, rows.Err()
 }
 
-// listEntriesWithCompressed is an internal helper that returns full entry data including compressed field.
-func (r *RAG) listEntriesWithCompressed() ([]knowledgeEntryFull, error) {
-	rows, err := r.db.Query(
-		`SELECT id, title, content, tags, compressed, enabled,
-		 CASE WHEN embedding IS NOT NULL THEN 1 ELSE 0 END,
-		 created_at, updated_at FROM knowledge ORDER BY updated_at DESC`,
-	)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-
-	var entries []knowledgeEntryFull
-	for rows.Next() {
-		var e knowledgeEntryFull
-		if err := rows.Scan(&e.ID, &e.Title, &e.Content, &e.Tags, &e.Compressed, &e.Enabled, &e.HasEmbedding, &e.CreatedAt, &e.UpdatedAt); err != nil {
-			return nil, err
-		}
-		entries = append(entries, e)
-	}
-	return entries, rows.Err()
-}
-
-// knowledgeEntryFull is an internal type that keeps compressed separate from content.
-type knowledgeEntryFull struct {
-	ID           int64
-	Title        string
-	Content      string
-	Tags         string
-	Compressed   string
-	Enabled      int
-	HasEmbedding int
-	CreatedAt    int64
-	UpdatedAt    int64
-}
-
 // Search performs a FTS5 full-text search and returns the top matching enabled entries.
 // If allowedTags is non-empty, only entries that have at least one matching tag are returned.
 func (r *RAG) Search(chatID, query string, maxResults int, allowedTags ...string) ([]types.KnowledgeEntry, error) {
@@ -280,62 +244,6 @@ func entryMatchesTags(entryTags string, allowed []string) bool {
 		}
 	}
 	return false
-}
-
-// searchFull is an internal search that also returns the compressed field.
-func (r *RAG) searchFull(query string, maxResults int) ([]knowledgeEntryFull, error) {
-	ftsQuery := sanitizeFTS5Query(query)
-	if ftsQuery == "" {
-		return nil, nil
-	}
-
-	rows, err := r.db.Query(
-		`SELECT k.id, k.title, k.content, k.tags, k.compressed, k.enabled, k.created_at, k.updated_at
-		 FROM knowledge_fts f
-		 JOIN knowledge k ON k.id = f.rowid
-		 WHERE knowledge_fts MATCH ? AND k.enabled = 1
-		 ORDER BY rank
-		 LIMIT ?`,
-		ftsQuery, maxResults,
-	)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-
-	var entries []knowledgeEntryFull
-	for rows.Next() {
-		var e knowledgeEntryFull
-		if err := rows.Scan(&e.ID, &e.Title, &e.Content, &e.Tags, &e.Compressed, &e.Enabled, &e.CreatedAt, &e.UpdatedAt); err != nil {
-			return nil, err
-		}
-		entries = append(entries, e)
-	}
-	return entries, rows.Err()
-}
-
-// FormatContext builds a string suitable for injection into the AI system prompt.
-// If useCompressed is true, uses the compressed version when available.
-func FormatContext(entries []knowledgeEntryFull, useCompressed bool) string {
-	if len(entries) == 0 {
-		return ""
-	}
-	var b strings.Builder
-	b.WriteString("Base de conhecimento relevante:\n\n")
-	for i, e := range entries {
-		if i > 0 {
-			b.WriteString("\n---\n")
-		}
-		b.WriteString("### ")
-		b.WriteString(e.Title)
-		b.WriteString("\n")
-		body := e.Content
-		if useCompressed && e.Compressed != "" {
-			body = e.Compressed
-		}
-		b.WriteString(body)
-	}
-	return b.String()
 }
 
 // FormatContextFromEntries builds a context string from types.KnowledgeEntry slice.
