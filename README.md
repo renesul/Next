@@ -1,49 +1,83 @@
 <div align="center">
 
-```
+<pre>
  ███╗   ██╗███████╗██╗  ██╗████████╗
  ████╗  ██║██╔════╝╚██╗██╔╝╚══██╔══╝
  ██╔██╗ ██║█████╗   ╚███╔╝    ██║
  ██║╚██╗██║██╔══╝   ██╔██╗    ██║
  ██║ ╚████║███████╗██╔╝ ██╗   ██║
  ╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝   ╚═╝
-```
+</pre>
 
-### **IA que atende por você**
+<p><strong>IA que atende por você</strong></p>
 
-Intelligent WhatsApp secretary — an AI agent on your personal WhatsApp number, powered by any OpenAI-compatible LLM, with a full web UI for configuration and monitoring.
+<p>Intelligent WhatsApp secretary — an AI agent on your personal number,<br>
+powered by any OpenAI-compatible LLM, with a full web UI for management.</p>
+
+<sub>Self-hosted · No Business API · Any LLM · Zero build step</sub>
+
+<br><br>
 
 [![Go 1.25+](https://img.shields.io/badge/Go-1.25+-00ADD8?style=for-the-badge&logo=go&logoColor=white)](https://go.dev)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](Dockerfile)
 [![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20WSL-lightgrey?style=for-the-badge)](/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 </div>
 
+<br>
+
+<p align="center">
+<a href="#-features">Features</a> ·
+<a href="#-quick-start">Quick Start</a> ·
+<a href="#-built-in-tools">Built-in Tools</a> ·
+<a href="#-architecture">Architecture</a> ·
+<a href="#-development">Development</a> ·
+<a href="#-tech-stack">Tech Stack</a> ·
+<a href="#-license">License</a>
+</p>
+
 ---
 
 ## ✨ Features
 
-- 📱 **WhatsApp via QR code** — uses your personal number, no Business API needed
-- 🤖 **Any OpenAI-compatible LLM** — OpenAI, Groq, Ollama, Together, LM Studio, etc.
-- 🔧 **16 built-in tools** + custom API tools + MCP protocol support
-- 📚 **Knowledge base** with FTS5 full-text search + embeddings (RAG)
-- 👥 **Up to 10 agents** with independent personality, model, and provider + agent chaining
-- 🛡️ **Guardrails** — whitelist/blacklist, anti-prompt-injection, PII filtering
-- ⏳ **Message debounce** — groups rapid messages before sending to AI
-- 🧠 **Session management** with automatic summaries (prevents hallucination)
-- 🖥️ **Full web UI** — config, conversations, logs, knowledge base, reports, chat
-- 🔐 **Multi-user auth** — admin and user roles, bcrypt, persistent sessions
-- 💬 **WhatsApp groups** (optional, configurable per group)
-- ⏰ **Scheduled messages** — hourly, daily, weekly, monthly, cron expressions
-- 🔌 **MCP server** — exposes all tools via SSE protocol
-- 🗄️ **External databases** — query MySQL and PostgreSQL from the AI
+<table>
+<tr>
+<td>📱 <strong>WhatsApp via QR code</strong><br>Uses your personal number, no Business API</td>
+<td>🤖 <strong>Any OpenAI-compatible LLM</strong><br>OpenAI, Groq, Ollama, Together, LM Studio…</td>
+</tr>
+<tr>
+<td>🔧 <strong>16 built-in tools</strong><br>Plus custom API tools and MCP protocol</td>
+<td>📚 <strong>Knowledge base (RAG)</strong><br>FTS5 full-text search + embedding similarity</td>
+</tr>
+<tr>
+<td>👥 <strong>Up to 10 agents</strong><br>Independent personality, model, provider + chaining</td>
+<td>🛡️ <strong>Guardrails</strong><br>Whitelist/blacklist, anti-injection, PII filtering</td>
+</tr>
+<tr>
+<td>⏳ <strong>Message debounce</strong><br>Groups rapid messages before sending to AI</td>
+<td>🧠 <strong>Session management</strong><br>Auto-summaries prevent hallucination</td>
+</tr>
+<tr>
+<td>🖥️ <strong>Full web UI</strong><br>Config, conversations, logs, knowledge, reports, chat</td>
+<td>🔐 <strong>Multi-user auth</strong><br>Admin/user roles, bcrypt, persistent sessions</td>
+</tr>
+<tr>
+<td>⏰ <strong>Scheduled messages</strong><br>Hourly, daily, weekly, monthly, cron expressions</td>
+<td>🔌 <strong>MCP server</strong><br>Exposes all tools via SSE protocol</td>
+</tr>
+<tr>
+<td>💬 <strong>WhatsApp groups</strong><br>Optional, configurable per group</td>
+<td>🗄️ <strong>External databases</strong><br>Query MySQL and PostgreSQL from the AI</td>
+</tr>
+</table>
 
 ---
 
 ## 🚀 Quick Start
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/renesul/Next.git
 cd Next
 make run
 ```
@@ -52,11 +86,26 @@ make run
 2. Login with `admin` / `admin123`
 3. Set your AI provider API key and base URL
 4. Scan the WhatsApp QR code
-5. Done — start chatting 🎉
+5. Done — start chatting
 
----
+<details>
+<summary><strong>🐳 Docker</strong></summary>
 
-## 📋 Requirements
+```bash
+docker compose up -d
+```
+
+Or build manually:
+
+```bash
+docker build -t next .
+docker run -d -p 8080:8080 -v next-data:/data next
+```
+
+</details>
+
+<details>
+<summary><strong>📋 Requirements</strong></summary>
 
 | Requirement | Details |
 |---|---|
@@ -64,9 +113,10 @@ make run
 | **CGO** | Enabled (`gcc` / `build-essential` must be installed) |
 | **OS** | Linux, macOS (Windows via WSL) |
 
----
+</details>
 
-## ⚙️ Configuration
+<details>
+<summary><strong>⚙️ Configuration</strong></summary>
 
 | Variable | Default | Description |
 |---|---|---|
@@ -77,28 +127,30 @@ Both are optional. Set them in `.env` or as environment variables.
 
 > **Everything else** (AI provider, system prompt, tools, guardrails, agents, etc.) is configured through the web UI and stored in SQLite.
 
+</details>
+
 ---
 
 ## 🛠️ Built-in Tools
 
-| Tool | Description |
-|---|---|
-| `get_datetime` | Current date, time, and day of week |
-| `create_task` | Create a task/reminder for the contact |
-| `list_tasks` | List tasks, optionally filtered by status |
-| `complete_task` | Mark a task as completed |
-| `search_knowledge` | Search the knowledge base (RAG) |
-| `calculate` | Evaluate math expressions (sqrt, abs, round, etc.) |
-| `search_web` | Web search via DuckDuckGo |
-| `fetch_url` | Fetch and extract text from a URL |
-| `weather` | Current weather for any location |
-| `save_note` | Save persistent notes about a contact |
-| `get_notes` | Retrieve saved notes |
-| `currency` | Currency conversion with live rates |
-| `schedule_message` | Schedule a message with optional recurrence |
-| `list_scheduled` | List pending scheduled messages |
-| `cancel_scheduled` | Cancel scheduled messages |
-| `query_database` | Run read-only SQL queries (local + external DBs) |
+| Category | Tool | Description |
+|---|---|---|
+| **Time** | `get_datetime` | Current date, time, and day of week |
+| **Tasks** | `create_task` | Create a task/reminder for the contact |
+| | `list_tasks` | List tasks, optionally filtered by status |
+| | `complete_task` | Mark a task as completed |
+| **Knowledge** | `search_knowledge` | Search the knowledge base (RAG) |
+| | `save_note` | Save persistent notes about a contact |
+| | `get_notes` | Retrieve saved notes |
+| **Web** | `search_web` | Web search via DuckDuckGo |
+| | `fetch_url` | Fetch and extract text from a URL |
+| | `weather` | Current weather for any location |
+| | `currency` | Currency conversion with live rates |
+| **Scheduling** | `schedule_message` | Schedule a message with optional recurrence |
+| | `list_scheduled` | List pending scheduled messages |
+| | `cancel_scheduled` | Cancel scheduled messages |
+| **Data** | `calculate` | Evaluate math expressions |
+| | `query_database` | Read-only SQL queries (local + external DBs) |
 
 You can also add **custom API tools** (any REST endpoint) and **MCP tools** (via SSE transport) through the web UI.
 
@@ -108,35 +160,21 @@ You can also add **custom API tools** (any REST endpoint) and **MCP tools** (via
 
 ### Message Flow
 
-```
-WhatsApp Message
-    │
-    ▼
- Filter (private/group, text-only, not from self)
-    │
-    ▼
- Debounce (group rapid messages)
-    │
-    ▼
- Guardrails Pre-filter
-    │
-    ▼
- Agent Lookup (per-contact routing)
-    │
-    ▼
- Session (create/resume + auto-summary)
-    │
-    ▼
- RAG (FTS5 + embeddings hybrid search)
-    │
-    ▼
- AI (LLM call + tool execution loop)
-    │
-    ▼
- Guardrails Post-filter
-    │
-    ▼
- WhatsApp Response
+```mermaid
+flowchart TD
+    A["📱 WhatsApp Message"] --> B["🔍 Filter"]
+    B --> C["⏳ Debounce"]
+    C --> D["🛡️ Guardrails Pre-filter"]
+    D --> E["👥 Agent Lookup"]
+    E --> F["🧠 Session"]
+    F --> G["📚 RAG Search"]
+    G --> H["🤖 LLM + Tools"]
+    H --> I["🛡️ Guardrails Post-filter"]
+    I --> J["📱 WhatsApp Response"]
+
+    style A fill:#25D366,color:#fff
+    style J fill:#25D366,color:#fff
+    style H fill:#2563eb,color:#fff
 ```
 
 ### Project Structure
@@ -167,20 +205,6 @@ templates/                    HTML pages (inline CSS/JS, no build step)
 
 ---
 
-## 📦 Tech Stack
-
-| Component | Technology |
-|---|---|
-| **Language** | Go |
-| **Database** | SQLite with FTS5 |
-| **WhatsApp** | whatsmeow (Web multidevice protocol) |
-| **AI Client** | go-openai (any OpenAI-compatible API) |
-| **MCP** | mcp-go (SSE transport) |
-| **Auth** | bcrypt (golang.org/x/crypto) |
-| **External DBs** | MySQL (go-sql-driver), PostgreSQL (lib/pq) |
-
----
-
 ## 🧑‍💻 Development
 
 ```bash
@@ -206,6 +230,20 @@ Stored in `~/.next/` (or `DB_PATH`):
 
 ---
 
+## 📦 Tech Stack
+
+| Component | Technology |
+|---|---|
+| **Language** | Go |
+| **Database** | SQLite with FTS5 |
+| **WhatsApp** | whatsmeow (Web multidevice protocol) |
+| **AI Client** | go-openai (any OpenAI-compatible API) |
+| **MCP** | mcp-go (SSE transport) |
+| **Auth** | bcrypt (golang.org/x/crypto) |
+| **External DBs** | MySQL (go-sql-driver), PostgreSQL (lib/pq) |
+
+---
+
 ## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).
@@ -214,6 +252,10 @@ This project is licensed under the [MIT License](LICENSE).
 
 <div align="center">
 
-Built with ❤️ using **Go** + **SQLite**
+<sub>No frameworks, no build steps, no nonsense.</sub>
+
+<br>
+
+<sub><a href="https://github.com/renesul/Next">GitHub</a> · <a href="LICENSE">MIT License</a></sub>
 
 </div>
