@@ -7,18 +7,18 @@ import (
 	"time"
 	"unicode"
 
-	"nex/app/ai"
-	"nex/app/guardrails"
-	"nex/app/memory"
-	apprag "nex/app/rag"
-	"nex/app/tools"
-	"nex/app/types"
-	"nex/internal/config"
-	"nex/internal/logger"
+	"next/app/ai"
+	"next/app/guardrails"
+	"next/app/memory"
+	apprag "next/app/rag"
+	"next/app/tools"
+	"next/app/types"
+	"next/internal/config"
+	"next/internal/logger"
 )
 
 // Pipeline centralizes the message processing logic shared by
-// WhatsApp (cmd/nex/main.go) and the web chat (internal/web).
+// WhatsApp (main.go) and the web chat (internal/web).
 type Pipeline struct {
 	cfg    *config.Config
 	memory *memory.Memory

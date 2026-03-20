@@ -1,7 +1,7 @@
-BINARY  = nex
+BINARY  = next
 SRC     = .
 TAGS    = fts5
-INSTALL = $(HOME)/.nex
+INSTALL = $(HOME)/.next
 
 .PHONY: build test lint fmt check install generate run clean docker-build docker-run docker-stop
 
@@ -41,7 +41,7 @@ clean:
 	rm -f $(BINARY)
 
 docker-build:
-	docker build -t nex .
+	docker build -t next .
 
 docker-run:
 	docker compose up -d

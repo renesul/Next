@@ -1,12 +1,12 @@
 <div align="center">
 
 ```
- ███╗   ██╗███████╗██╗  ██╗
- ████╗  ██║██╔════╝╚██╗██╔╝
- ██╔██╗ ██║█████╗   ╚███╔╝
- ██║╚██╗██║██╔══╝   ██╔██╗
- ██║ ╚████║███████╗██╔╝ ██╗
- ╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝
+ ███╗   ██╗███████╗██╗  ██╗████████╗
+ ████╗  ██║██╔════╝╚██╗██╔╝╚══██╔══╝
+ ██╔██╗ ██║█████╗   ╚███╔╝    ██║
+ ██║╚██╗██║██╔══╝   ██╔██╗    ██║
+ ██║ ╚████║███████╗██╔╝ ██╗   ██║
+ ╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝   ╚═╝
 ```
 
 ### **IA que atende por você**
@@ -44,7 +44,7 @@ Intelligent WhatsApp secretary — an AI agent on your personal WhatsApp number,
 
 ```bash
 git clone <repo-url>
-cd Nex
+cd Next
 make run
 ```
 
@@ -71,7 +71,7 @@ make run
 | Variable | Default | Description |
 |---|---|---|
 | `PORT` | `8080` | HTTP server port |
-| `DB_PATH` | `~/.nex/` | Data directory (databases, logs) |
+| `DB_PATH` | `~/.next/` | Data directory (databases, logs) |
 
 Both are optional. Set them in `.env` or as environment variables.
 
@@ -184,12 +184,12 @@ templates/                    HTML pages (inline CSS/JS, no build step)
 ## 🧑‍💻 Development
 
 ```bash
-make build               # Build binary (output: nex)
+make build               # Build binary (output: next)
 make test                # Run all tests
 make lint                # Run golangci-lint
 make fmt                 # Format code
 make check               # deps + fmt + vet + test (full CI check)
-make install             # Build and install to ~/.nex
+make install             # Build and install to ~/.next
 make generate            # Run go generate
 make run                 # Build and run
 make clean               # Remove binary
@@ -197,11 +197,11 @@ make clean               # Remove binary
 
 ### Databases
 
-Stored in `~/.nex/` (or `DB_PATH`):
+Stored in `~/.next/` (or `DB_PATH`):
 
 | File | Purpose |
 |---|---|
-| `nex.db` | App data (config, messages, summaries, knowledge, tasks, tools, agents, users, sessions, logs) |
+| `next.db` | App data (config, messages, summaries, knowledge, tasks, tools, agents, users, sessions, logs) |
 | `whatsapp.db` | WhatsApp session store (managed by whatsmeow) |
 
 ---

@@ -4,8 +4,8 @@ import (
 	"regexp"
 	"strings"
 
-	"nex/app/types"
-	"nex/internal/logger"
+	"next/app/types"
+	"next/internal/logger"
 )
 
 // GuardSettings holds per-agent guardrail configuration.

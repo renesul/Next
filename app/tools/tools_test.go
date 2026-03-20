@@ -10,7 +10,7 @@ import (
 
 	_ "github.com/mattn/go-sqlite3"
 
-	"nex/app/types"
+	"next/app/types"
 )
 
 // ---------------------------------------------------------------------------

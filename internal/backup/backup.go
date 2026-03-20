@@ -71,7 +71,7 @@ func (b *Backup) Run() (string, error) {
 	b.mu.Lock()
 	defer b.mu.Unlock()
 
-	name := fmt.Sprintf("nex-backup-%s.db", time.Now().Format("2006-01-02-150405"))
+	name := fmt.Sprintf("next-backup-%s.db", time.Now().Format("2006-01-02-150405"))
 	dest := filepath.Join(b.dir, name)
 
 	_, err := b.db.Exec(fmt.Sprintf("VACUUM INTO '%s'", strings.ReplaceAll(dest, "'", "''")))
@@ -94,7 +94,7 @@ func (b *Backup) List() ([]BackupInfo, error) {
 
 	var backups []BackupInfo
 	for _, e := range entries {
-		if e.IsDir() || !strings.HasPrefix(e.Name(), "nex-backup-") {
+		if e.IsDir() || !strings.HasPrefix(e.Name(), "next-backup-") {
 			continue
 		}
 		info, err := e.Info()
@@ -123,7 +123,7 @@ func (b *Backup) rotate() {
 
 	var files []string
 	for _, e := range entries {
-		if !e.IsDir() && strings.HasPrefix(e.Name(), "nex-backup-") {
+		if !e.IsDir() && strings.HasPrefix(e.Name(), "next-backup-") {
 			files = append(files, e.Name())
 		}
 	}

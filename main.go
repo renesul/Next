@@ -14,20 +14,20 @@ import (
 
 	_ "github.com/mattn/go-sqlite3"
 
-	"nex/app/ai"
-	"nex/app/guardrails"
-	"nex/app/memory"
-	"nex/app/pipeline"
-	"nex/app/rag"
-	"nex/app/tools"
-	"nex/internal/auth"
-	"nex/internal/backup"
-	"nex/internal/config"
-	"nex/internal/debounce"
-	"nex/internal/logger"
-	"nex/internal/ratelimit"
-	"nex/internal/web"
-	"nex/internal/whatsapp"
+	"next/app/ai"
+	"next/app/guardrails"
+	"next/app/memory"
+	"next/app/pipeline"
+	"next/app/rag"
+	"next/app/tools"
+	"next/internal/auth"
+	"next/internal/backup"
+	"next/internal/config"
+	"next/internal/debounce"
+	"next/internal/logger"
+	"next/internal/ratelimit"
+	"next/internal/web"
+	"next/internal/whatsapp"
 )
 
 func main() {
@@ -36,7 +36,7 @@ func main() {
 		port = "8080"
 	}
 
-	// Resolve data directory: DB_PATH overrides, otherwise ~/.nex/
+	// Resolve data directory: DB_PATH overrides, otherwise ~/.next/
 	dataDir := ""
 	dbPath := os.Getenv("DB_PATH")
 	if dbPath == "" {
@@ -44,11 +44,11 @@ func main() {
 		if err != nil {
 			log.Fatal("resolve home dir:", err)
 		}
-		dataDir = filepath.Join(home, ".nex")
+		dataDir = filepath.Join(home, ".next")
 		if err := os.MkdirAll(dataDir, 0700); err != nil {
 			log.Fatal("create data dir:", err)
 		}
-		dbPath = filepath.Join(dataDir, "nex.db")
+		dbPath = filepath.Join(dataDir, "next.db")
 	} else {
 		dataDir = filepath.Dir(dbPath)
 	}
@@ -114,12 +114,12 @@ func main() {
 	tr.StartScheduler()
 
 	// 7b. Initialize MCP server (if enabled)
-	var mcpServer *tools.NexMCPServer
+	var mcpServer *tools.NextMCPServer
 	cfg.Mu.RLock()
 	mcpEnabled := cfg.MCPServerEnabled
 	cfg.Mu.RUnlock()
 	if mcpEnabled {
-		mcpServer = tools.NewNexMCPServer(tr, cfg)
+		mcpServer = tools.NewNextMCPServer(tr, cfg)
 		log.Println("MCP server enabled on /mcp/sse")
 	}
 
@@ -191,7 +191,7 @@ func main() {
 	}
 
 	// 12. Print startup message
-	fmt.Printf("Nex rodando em http://localhost:%s\n", port)
+	fmt.Printf("Next rodando em http://localhost:%s\n", port)
 
 	// Start server in goroutine
 	go func() {

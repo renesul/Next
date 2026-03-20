@@ -16,7 +16,7 @@ import (
 	mcpserver "github.com/mark3labs/mcp-go/server"
 	openai "github.com/sashabaranov/go-openai"
 
-	"nex/internal/config"
+	"next/internal/config"
 )
 
 // MCPTool represents a discovered MCP tool mapped to OpenAI format.
@@ -76,7 +76,7 @@ func (mc *MCPClient) Connect() error {
 	initReq := mcp.InitializeRequest{}
 	initReq.Params.ProtocolVersion = mcp.LATEST_PROTOCOL_VERSION
 	initReq.Params.ClientInfo = mcp.Implementation{
-		Name:    "nex",
+		Name:    "next",
 		Version: "1.0.0",
 	}
 
@@ -263,18 +263,18 @@ func SanitizeMCPName(name string) string {
 	return s
 }
 
-// --- NexMCPServer: exposes Nex tools via MCP SSE protocol ---
+// --- NextMCPServer: exposes Next tools via MCP SSE protocol ---
 
-// NexMCPServer wraps a mcp-go SSE server that exposes Nex's tool registry.
-type NexMCPServer struct {
+// NextMCPServer wraps a mcp-go SSE server that exposes Next's tool registry.
+type NextMCPServer struct {
 	sse   *mcpserver.SSEServer
 	cfg   *config.Config
 	tools *ToolRegistry
 }
 
-// NewNexMCPServer creates and configures the MCP server with all registered tools.
-func NewNexMCPServer(tools *ToolRegistry, cfg *config.Config) *NexMCPServer {
-	srv := mcpserver.NewMCPServer("Nex", "1.0.0")
+// NewNextMCPServer creates and configures the MCP server with all registered tools.
+func NewNextMCPServer(tools *ToolRegistry, cfg *config.Config) *NextMCPServer {
+	srv := mcpserver.NewMCPServer("Next", "1.0.0")
 
 	tools.mu.RLock()
 	for name, handler := range tools.tools {
@@ -311,20 +311,20 @@ func NewNexMCPServer(tools *ToolRegistry, cfg *config.Config) *NexMCPServer {
 		mcpserver.WithMessageEndpoint("/message"),
 	)
 
-	return &NexMCPServer{sse: sseServer, cfg: cfg, tools: tools}
+	return &NextMCPServer{sse: sseServer, cfg: cfg, tools: tools}
 }
 
 // SSEHandler returns the SSE endpoint handler with optional bearer token auth.
-func (n *NexMCPServer) SSEHandler() http.Handler {
+func (n *NextMCPServer) SSEHandler() http.Handler {
 	return n.authMiddleware(n.sse.SSEHandler())
 }
 
 // MessageHandler returns the message endpoint handler with optional bearer token auth.
-func (n *NexMCPServer) MessageHandler() http.Handler {
+func (n *NextMCPServer) MessageHandler() http.Handler {
 	return n.authMiddleware(n.sse.MessageHandler())
 }
 
-func (n *NexMCPServer) authMiddleware(next http.Handler) http.Handler {
+func (n *NextMCPServer) authMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
 		n.cfg.Mu.RLock()
 		token := n.cfg.MCPServerToken
@@ -333,7 +333,9 @@ func (n *NexMCPServer) authMiddleware(next http.Handler) http.Handler {
 		if token != "" {
 			auth := r.Header.Get("Authorization")
 			if auth != "Bearer "+token {
-				http.Error(rw, "Unauthorized", 401)
+				rw.Header().Set("Content-Type", "application/json")
+			rw.WriteHeader(401)
+			rw.Write([]byte(`{"error":"Unauthorized"}`))
 				return
 			}
 		}

@@ -1,11 +1,11 @@
 services:
-  nex:
+  next:
     build: .
     ports:
       - "8080:8080"
     volumes:
-      - nex-data:/data
+      - next-data:/data
     restart: unless-stopped
 
 volumes:
-  nex-data:
+  next-data:

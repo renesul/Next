@@ -9,8 +9,8 @@ import (
 	"sync"
 	"time"
 
-	"nex/app/types"
-	"nex/internal/config"
+	"next/app/types"
+	"next/internal/config"
 )
 
 type dbLogEntry struct {
@@ -96,7 +96,7 @@ func (l *Logger) getFile() (*os.File, error) {
 	if l.file != nil {
 		l.file.Close()
 	}
-	path := filepath.Join(l.LogDir, fmt.Sprintf("nex-%s.log", today))
+	path := filepath.Join(l.LogDir, fmt.Sprintf("next-%s.log", today))
 	f, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return nil, err

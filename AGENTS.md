@@ -32,7 +32,7 @@
 
 ## Files
 ```
-cmd/nex/main.go                  — entry point, wiring, signal handling, DB migration
+cmd/next/main.go                 — entry point, wiring, signal handling, DB migration
 
 app/                             — BUSINESS LOGIC / DOMAIN
   types/types.go                 — shared types (Message, Agent, Contact, etc.)
@@ -41,7 +41,7 @@ app/                             — BUSINESS LOGIC / DOMAIN
   rag/rag.go                     — knowledge base with FTS5 search (CRUD, search, format)
   guardrails/guardrails.go       — pre/post-AI message filtering (whitelist, injection, PII)
   tools/tools.go                 — function calling registry + built-in/custom tools + schedules + ext DB + agents
-  tools/mcp.go                   — MCP client (SSE connect, tool discovery) + MCP server (NexMCPServer)
+  tools/mcp.go                   — MCP client (SSE connect, tool discovery) + MCP server (NextMCPServer)
   pipeline/pipeline.go           — message processing pipeline (guardrails → session → RAG → AI → tools → save)
 
 internal/                        — INFRASTRUCTURE / ADAPTERS
@@ -56,7 +56,7 @@ templates/                       — index.html, conversas.html, logs.html, conh
 ```
 
 ## Data Directory
-- Default: `~/.nex/` (created automatically)
+- Default: `~/.next/` (created automatically)
 - Override with `DB_PATH` env var
 
 ## Auth
@@ -92,13 +92,13 @@ templates/                       — index.html, conversas.html, logs.html, conh
 ## WhatsApp
 - Read receipts: messages are marked as read when processed (private + group)
 
-## Databases (stored in ~/.nex/)
-- `nex.db` — app data (config, messages, summaries, logs, knowledge, tasks, scheduled_messages, custom_tools, mcp_servers, external_databases, users, sessions, agents, agent_routing)
+## Databases (stored in ~/.next/)
+- `next.db` — app data (config, messages, summaries, logs, knowledge, tasks, scheduled_messages, custom_tools, mcp_servers, external_databases, users, sessions, agents, agent_routing)
 - `whatsapp.db` — whatsmeow internal session store
 
 ## Running
 ```
-./build.sh && ./nex
+./build.sh && ./next
 # or
 ./run.sh
 ```

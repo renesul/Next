@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agentes - Nex</title>
+<title>Agentes - Next</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231e293b'/><text x='50' y='72' font-size='60' font-family='system-ui' font-weight='700' fill='%233b82f6' text-anchor='middle'>N</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -294,6 +294,10 @@ async function apiFetch(url, opts) {
   if (r.status === 403) { toast('Sem permissao'); return null; }
   return r;
 }
+async function getError(r) {
+  try { const d = await r.json(); return d.error || 'Erro desconhecido'; }
+  catch(e) { return 'Erro desconhecido'; }
+}
 
 async function doLogout() { await fetch('/api/logout', {method:'POST'}); location.href = '/login'; }
 
@@ -371,7 +375,7 @@ async function toggleAgent(id, enabled) {
     });
     if (!r) return;
     if (r.ok) { toast(enabled ? 'Agente ativado' : 'Agente desativado'); await loadAgents(); }
-    else toast('Erro: ' + await r.text());
+    else toast('Erro: ' + await getError(r));
   } catch(e) { toast('Erro: ' + e.message); }
 }
 
@@ -452,7 +456,7 @@ async function saveAgent() {
       cancelEdit();
       await loadAgents();
     } else {
-      toast('Erro: ' + await r.text());
+      toast('Erro: ' + await getError(r));
     }
   } catch(e) { toast('Erro: ' + e.message); }
   btn.disabled = false;
@@ -562,7 +566,7 @@ async function deleteAgent(id) {
     const r = await apiFetch('/api/agents/' + id, { method: 'DELETE' });
     if (!r) return;
     if (r.ok) { toast('Agente excluido'); await loadAgents(); }
-    else toast('Erro: ' + await r.text());
+    else toast('Erro: ' + await getError(r));
   } catch(e) { toast('Erro: ' + e.message); }
 }
 

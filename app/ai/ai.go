@@ -12,8 +12,8 @@ import (
 
 	openai "github.com/sashabaranov/go-openai"
 
-	"nex/app/types"
-	"nex/internal/logger"
+	"next/app/types"
+	"next/internal/logger"
 )
 
 const (

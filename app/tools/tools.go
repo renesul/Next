@@ -23,12 +23,12 @@ import (
 	_ "github.com/lib/pq"
 	openai "github.com/sashabaranov/go-openai"
 
-	"nex/app/ai"
-	apprag "nex/app/rag"
-	"nex/app/types"
-	"nex/internal/config"
-	"nex/internal/logger"
-	"nex/internal/whatsapp"
+	"next/app/ai"
+	apprag "next/app/rag"
+	"next/app/types"
+	"next/internal/config"
+	"next/internal/logger"
+	"next/internal/whatsapp"
 )
 
 // ToolHandler defines a single callable tool.
@@ -1195,7 +1195,7 @@ func toolHTTPGet(rawURL string, maxBytes int64) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	req.Header.Set("User-Agent", "Mozilla/5.0 (compatible; Nex/1.0)")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (compatible; Next/1.0)")
 	resp, err := toolHTTPClient.Do(req)
 	if err != nil {
 		return "", err
@@ -1741,7 +1741,7 @@ func MakeCustomExecutor(ct types.CustomTool) func(chatID, args string) (string, 
 		if err != nil {
 			return fmt.Sprintf("Erro ao criar request: %s", err), nil
 		}
-		req.Header.Set("User-Agent", "Nex/1.0")
+		req.Header.Set("User-Agent", "Next/1.0")
 
 		var headers map[string]string
 		if json.Unmarshal([]byte(ct.Headers), &headers) == nil {
@@ -2405,7 +2405,7 @@ func (tr *ToolRegistry) seedDefaultAgent() {
 		?, ?, '', '',
 		'', ?, 1, 0,
 		0, 0, 0)`,
-		"Nex (Padrão)", "Agente padrão do sistema", config.DefaultSystemPrompt, config.DefaultUserPrompt, config.DefaultModel, config.DefaultMaxTokens,
+		"Next (Padrão)", "Agente padrão do sistema", config.DefaultSystemPrompt, config.DefaultUserPrompt, config.DefaultModel, config.DefaultMaxTokens,
 		config.DefaultRAGMaxResults, config.DefaultRAGMaxTokens, config.DefaultRAGEmbeddingModel,
 		config.DefaultToolsMaxRounds, config.DefaultToolTimeoutSec,
 		config.DefaultGuardMaxInput, config.DefaultGuardMaxOutput, config.DefaultGuardPhoneMode,

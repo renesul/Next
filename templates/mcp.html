@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MCP - Nex</title>
+<title>MCP - Next</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231e293b'/><text x='50' y='72' font-size='60' font-family='system-ui' font-weight='700' fill='%233b82f6' text-anchor='middle'>N</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -49,18 +49,18 @@
 
 <div class="container">
 
-  <!-- Section 1: Nex MCP Server Config -->
+  <!-- Section 1: Next MCP Server Config -->
   <div class="card">
     <h2>
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1e293b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      Servidor MCP do Nex
+      Servidor MCP do Next
     </h2>
     <div class="field">
       <div class="toggle">
         <input type="checkbox" id="mcp_server_enabled">
         <label for="mcp_server_enabled">Expor ferramentas via protocolo MCP (SSE)</label>
       </div>
-      <div class="hint">Permite que clientes MCP externos acessem as ferramentas do Nex</div>
+      <div class="hint">Permite que clientes MCP externos acessem as ferramentas do Next</div>
     </div>
     <div class="field">
       <label>Token de autenticacao</label>
@@ -70,7 +70,7 @@
     <div class="endpoint-box">
       Endpoint: <strong>/mcp/sse</strong>
     </div>
-    <div class="hint" style="margin-top:6px;">Requer reinicio do Nex para ativar/desativar o servidor MCP</div>
+    <div class="hint" style="margin-top:6px;">Requer reinicio do Next para ativar/desativar o servidor MCP</div>
     <button class="btn" style="margin-top:12px;" onclick="saveServerConfig()">Salvar Configuracao</button>
   </div>
 
@@ -139,13 +139,17 @@ async function apiFetch(url, opts) {
   if (r.status === 403) { toast('Sem permissao'); return null; }
   return r;
 }
+async function getError(r) {
+  try { const d = await r.json(); return d.error || 'Erro desconhecido'; }
+  catch(e) { return 'Erro desconhecido'; }
+}
 
 async function doLogout() {
   await fetch('/api/logout', {method:'POST'});
   location.href = '/login';
 }
 
-// --- Section 1: Nex MCP Server Config ---
+// --- Section 1: Next MCP Server Config ---
 
 async function loadServerConfig() {
   try {
@@ -176,7 +180,7 @@ async function saveServerConfig() {
       toast('Configuracao MCP salva!');
       loadServerConfig();
     } else {
-      toast('Erro ao salvar: ' + await r.text());
+      toast('Erro ao salvar: ' + await getError(r));
     }
   } catch(e) { toast('Erro: ' + e.message); }
 }
@@ -270,7 +274,7 @@ async function saveMCPServer() {
       resetMCPForm();
       loadMCPServers();
     } else {
-      toast('Erro: ' + await r.text());
+      toast('Erro: ' + await getError(r));
     }
   } catch(e) { toast('Erro: ' + e.message); }
 }
@@ -304,7 +308,7 @@ async function deleteMCPServer(id) {
     const r = await apiFetch('/api/mcp-servers/' + id, { method: 'DELETE' });
     if (!r) return;
     if (r.ok) { toast('Servidor excluido'); loadMCPServers(); }
-    else toast('Erro: ' + await r.text());
+    else toast('Erro: ' + await getError(r));
   } catch(e) { toast('Erro: ' + e.message); }
 }
 

@@ -17,9 +17,9 @@ import (
 	waLog "go.mau.fi/whatsmeow/util/log"
 	"google.golang.org/protobuf/proto"
 
-	apptypes "nex/app/types"
-	"nex/internal/config"
-	"nex/internal/logger"
+	apptypes "next/app/types"
+	"next/internal/config"
+	"next/internal/logger"
 )
 
 // WhatsApp manages the whatsmeow connection.
@@ -36,8 +36,8 @@ type WhatsApp struct {
 }
 
 func NewWhatsApp(dbPath string, l *logger.Logger, cfg *config.Config) (*WhatsApp, error) {
-	// Identify as "Nex" instead of "whatsmeow" to the WhatsApp servers
-	store.DeviceProps.Os = proto.String("Nex")
+	// Identify as "Next" instead of "whatsmeow" to the WhatsApp servers
+	store.DeviceProps.Os = proto.String("Next")
 
 	dbLog := waLog.Stdout("Database", "ERROR", true)
 	container, err := sqlstore.New(context.Background(), "sqlite3", fmt.Sprintf("file:%s?_foreign_keys=1&_pragma=journal_mode(WAL)&_pragma=busy_timeout(5000)", dbPath), dbLog)

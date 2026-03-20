@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"nex/app/types"
+	"next/app/types"
 )
 
 // Memory manages sessions, conversation history, and summaries.

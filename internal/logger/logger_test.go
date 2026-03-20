@@ -8,8 +8,8 @@ import (
 
 	_ "github.com/mattn/go-sqlite3"
 
-	"nex/app/types"
-	"nex/internal/config"
+	"next/app/types"
+	"next/internal/config"
 )
 
 func setupTestLogger(t *testing.T, debug bool) (*Logger, *sql.DB) {

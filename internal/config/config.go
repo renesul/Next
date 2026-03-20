@@ -47,7 +47,7 @@ const (
 const DefaultModel = "gpt-4.1-mini"
 const DefaultMaxTokens = 1024
 
-const DefaultSystemPrompt = `Voce e o Nex, um agente inteligente no WhatsApp.
+const DefaultSystemPrompt = `Voce e o Next, um agente inteligente no WhatsApp.
 
 Regras:
 - Responda de forma curta, educada e util (maximo 3 linhas)

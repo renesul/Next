@@ -1,4 +1,4 @@
-module nex
+module next
 
 go 1.25.0
 
@@ -11,6 +11,7 @@ require (
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
 	go.mau.fi/whatsmeow v0.0.0-20260305215846-fc65416c22c4
 	golang.org/x/crypto v0.48.0
+	golang.org/x/time v0.15.0
 	google.golang.org/protobuf v1.36.11
 )
 
@@ -38,6 +39,5 @@ require (
 	golang.org/x/net v0.50.0 // indirect
 	golang.org/x/sys v0.41.0 // indirect
 	golang.org/x/text v0.34.0 // indirect
-	golang.org/x/time v0.15.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

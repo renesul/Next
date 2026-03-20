@@ -9,7 +9,7 @@ import (
 
 	openai "github.com/sashabaranov/go-openai"
 
-	"nex/app/types"
+	"next/app/types"
 )
 
 func TestNewAI(t *testing.T) {

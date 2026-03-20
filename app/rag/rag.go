@@ -11,9 +11,9 @@ import (
 	"strings"
 	"sync"
 
-	"nex/app/ai"
-	"nex/app/types"
-	"nex/internal/logger"
+	"next/app/ai"
+	"next/app/types"
+	"next/internal/logger"
 )
 
 var (
@@ -870,7 +870,7 @@ func (r *RAG) HybridSearch(chatID string, a *ai.AI, embModel, query string, maxR
 	return merged, nil
 }
 
-// GetSchemaDescription returns a text description of the nex.db schema for the report tool.
+// GetSchemaDescription returns a text description of the next.db schema for the report tool.
 func (r *RAG) GetSchemaDescription() string {
 	return `messages (id, chat_id, role, content, session_id, created_at, wa_msg_id, read_at)
 summaries (id, chat_id, session_id, content, created_at)
