@@ -1,8 +1,11 @@
 package ratelimit
 
 import (
+	"net"
 	"net/http"
+	"os"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 
@@ -85,8 +88,13 @@ func (rl *RateLimiter) HTTPMiddleware(next http.Handler) http.Handler {
 		}
 
 		ip := r.RemoteAddr
-		if fwd := r.Header.Get("X-Forwarded-For"); fwd != "" {
-			ip = fwd
+		if host, _, err := net.SplitHostPort(ip); err == nil {
+			ip = host
+		}
+		if os.Getenv("TRUSTED_PROXY") != "" {
+			if fwd := r.Header.Get("X-Forwarded-For"); fwd != "" {
+				ip = strings.TrimSpace(strings.Split(fwd, ",")[0])
+			}
 		}
 
 		// Use stricter limits for login

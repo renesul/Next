@@ -24,6 +24,7 @@ import (
 	"next/internal/backup"
 	"next/internal/config"
 	"next/internal/debounce"
+	"next/internal/httputil"
 	"next/internal/logger"
 	"next/internal/ratelimit"
 	"next/internal/web"
@@ -179,7 +180,7 @@ func main() {
 		},
 	})
 
-	server := &http.Server{Addr: ":" + port, Handler: rl.HTTPMiddleware(a.Middleware(mux))}
+	server := &http.Server{Addr: ":" + port, Handler: httputil.SecurityHeaders(rl.HTTPMiddleware(a.Middleware(mux)))}
 
 	// 11. Connect WhatsApp if API key is set
 	cfg.Mu.RLock()

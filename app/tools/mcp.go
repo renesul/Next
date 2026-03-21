@@ -2,6 +2,7 @@ package tools
 
 import (
 	"context"
+	"crypto/subtle"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -332,7 +333,8 @@ func (n *NextMCPServer) authMiddleware(next http.Handler) http.Handler {
 
 		if token != "" {
 			auth := r.Header.Get("Authorization")
-			if auth != "Bearer "+token {
+			expected := "Bearer " + token
+			if subtle.ConstantTimeCompare([]byte(auth), []byte(expected)) != 1 {
 				rw.Header().Set("Content-Type", "application/json")
 				rw.WriteHeader(401)
 				rw.Write([]byte(`{"error":"Unauthorized"}`))

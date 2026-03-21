@@ -1188,7 +1188,18 @@ var (
 	reDDGSnippet = regexp.MustCompile(`(?s)class="result__snippet"[^>]*>(.*?)</a>`)
 )
 
-var toolHTTPClient = &http.Client{Timeout: 10 * time.Second}
+var toolHTTPClient = &http.Client{
+	Timeout: 10 * time.Second,
+	CheckRedirect: func(req *http.Request, via []*http.Request) error {
+		if len(via) >= 3 {
+			return fmt.Errorf("too many redirects")
+		}
+		if err := validateURLSafety(req.URL.String()); err != nil {
+			return fmt.Errorf("redirect blocked: %w", err)
+		}
+		return nil
+	},
+}
 
 func toolHTTPGet(rawURL string, maxBytes int64) (string, error) {
 	req, err := http.NewRequest("GET", rawURL, nil)
@@ -1708,7 +1719,9 @@ func BuildToolDefinition(ct types.CustomTool) openai.Tool {
 func MakeCustomExecutor(ct types.CustomTool) func(chatID, args string) (string, error) {
 	return func(chatID, args string) (string, error) {
 		var argsMap map[string]any
-		json.Unmarshal([]byte(args), &argsMap)
+		if err := json.Unmarshal([]byte(args), &argsMap); err != nil {
+			return fmt.Sprintf("Erro: argumentos JSON invalidos: %s", err), nil
+		}
 
 		finalURL := ct.URLTemplate
 		for k, v := range argsMap {

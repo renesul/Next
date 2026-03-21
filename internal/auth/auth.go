@@ -414,7 +414,8 @@ func (a *Auth) HandleLogin(rw http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		tmpl, err := template.ParseFiles("templates/login.html")
 		if err != nil {
-			http.Error(rw, "Template error: "+err.Error(), 500)
+			log.Printf("template error: login.html: %v", err)
+			http.Error(rw, "Internal server error", 500)
 			return
 		}
 		tmpl.Execute(rw, nil)

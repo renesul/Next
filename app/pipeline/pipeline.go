@@ -51,6 +51,10 @@ func (p *Pipeline) Process(chatID, text, contactName string) types.PipelineResul
 
 // ProcessWithAgent processes a message optionally forcing a specific agent by ID.
 func (p *Pipeline) ProcessWithAgent(chatID, text, contactName string, agentID int64) types.PipelineResult {
+	if strings.TrimSpace(text) == "" {
+		return types.PipelineResult{}
+	}
+
 	// Lock per chatID to prevent concurrent session manipulation
 	mu := p.getChatMu(chatID)
 	mu.Lock()
