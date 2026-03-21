@@ -8,15 +8,15 @@
 <link rel="stylesheet" href="/static/style.css">
 <style>
 .field textarea { min-height: 100px; }
-.agent-row { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; margin-bottom:8px; background:rgba(255,255,255,0.6); border-radius:var(--radius-sm); border:1px solid rgba(0,0,0,0.06); transition:all 0.15s var(--ease); }
-.agent-row:hover { background:rgba(99,102,241,0.04); border-color:rgba(99,102,241,0.12); }
+.agent-row { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; margin-bottom:8px; background:var(--bg-card); border-radius:var(--radius-sm); border:1px solid var(--border-color); transition:all 0.15s var(--ease); }
+.agent-row:hover { background:var(--bg-page); border-color:var(--accent); }
 .agent-badges { display:flex; flex-wrap:wrap; gap:4px; margin-top:4px; }
-.section-collapse { margin-top:8px; border:1px solid rgba(0,0,0,0.06); border-radius:var(--radius-sm); padding:14px; background:rgba(255,255,255,0.3); }
+.section-collapse { margin-top:8px; border:1px solid var(--border-color); border-radius:var(--radius-sm); padding:14px; background:var(--bg-page); }
 .section-collapse summary { cursor:pointer; font-size:13px; font-weight:600; color:var(--slate-800); }
 .section-collapse[open] summary { margin-bottom:12px; }
 .rag-pill { display:inline-flex; align-items:center; gap:4px; background:#e0e7ff; color:#3730a3; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:500; }
 .rag-pill .pill-x { cursor:pointer; font-size:14px; color:#6366f1; margin-left:2px; }
-#rag-tags-wrap { display:flex; flex-wrap:wrap; gap:6px; padding:10px; border:1.5px solid rgba(0,0,0,0.08); border-radius:var(--radius-sm); background:rgba(255,255,255,0.5); min-height:42px; cursor:pointer; }
+#rag-tags-wrap { display:flex; flex-wrap:wrap; gap:6px; padding:10px; border:1px solid var(--border-color); border-radius:var(--radius-sm); background:var(--bg-card); min-height:42px; cursor:pointer; }
 #rag-tags-dropdown { display:none; border:1.5px solid rgba(0,0,0,0.08); border-top:none; border-radius:0 0 var(--radius-sm) var(--radius-sm); background:white; max-height:180px; overflow-y:auto; }
 .rag-dropdown-item { display:flex; align-items:center; gap:8px; padding:6px 12px; cursor:pointer; font-size:13px; }
 .rag-dropdown-item:hover { background:rgba(99,102,241,0.04); }
